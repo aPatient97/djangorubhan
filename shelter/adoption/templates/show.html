@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ dog.name }}</h1>
+    <p>Breed: {{ dog.breed }}</p>
+
+    {% if not dog.owner %}
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Adopt me!">
+        </form>
+    {% else %}
+        {% if dog.owner == user %}
+            <div>Thank you for adopting me!</div>
+        {% else %}
+            <div>I have been adopted by {{dog.owner.username}}!</div>
+        {% endif %}
+    {% endif %}
+{% endblock content %}
